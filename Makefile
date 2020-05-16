@@ -2,7 +2,7 @@ GO ?= go
 GOFMT ?= gofmt "-s"
 GOFILES := $(shell find . -name "*.go" -type f -not -path "./vendor/*")
 PACKAGES ?= $(shell $(GO) list ./... | grep -v /vendor/)
-IMAGE := theodesp/golangdocs.com
+IMAGE := theodesp/go-requestbin
 
 VERSION := $(shell git rev-parse --short HEAD)
 BUILD_DATE := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
@@ -61,14 +61,14 @@ install:
 .PHONY: image
 image:
 	@if [ "${DEPLOY}" = "true" ]; then\
-		docker build --pull --cache-from "${IMAGE}" --tag "${IMAGE}" \ 
+		docker build --pull --cache-from "${IMAGE}" \
 		--build-arg VERSION="${VERSION}" \
 		--build-arg BUILD_DATE="${BUILD_DATE}" \
 		--build-arg VCS_URL="${VCS_URL}" \
 		--build-arg VCS_REF="${VCS_REF}" \
 		--build-arg NAME="${NAME}" \
 		--build-arg VENDOR="${VENDOR}" \
-		-t theodesp/go-requestbin .;\
+		--tag "${IMAGE}" .;\
 	fi
 
 .PHONY: push-image
