@@ -2,12 +2,25 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"time"
 )
 
 func main() {
-	http.HandleFunc("/", HelloServer)
-	http.ListenAndServe(":3000", nil)
+	mux := http.NewServeMux()
+	hs := http.HandlerFunc(HelloServer)
+	mux.Handle("/", hs)
+
+	server := &http.Server{
+		ReadHeaderTimeout: 20 * time.Second,
+		ReadTimeout:       1 * time.Minute,
+		WriteTimeout:      2 * time.Minute,
+		Handler:           mux,
+		Addr:              ":3000",
+	}
+	log.Println("Listening...")
+	server.ListenAndServe()
 }
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
