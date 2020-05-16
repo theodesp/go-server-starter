@@ -1,0 +1,23 @@
+run:
+  tests: true
+
+linters:
+  enable:
+    - golint
+    - gocritic
+    - stylecheck
+    - gosec
+    - unconvert
+  disable:
+    - maligned
+    - unparam
+    - lll
+    - gochecknoinits
+    - gochecknoglobals
+    - dupl
+    - nakedret
+
+service:
+  golangci-lint-version: 1.14.x # use fixed version to not introduce new linters unexpectedly
+  prepare:
+    - echo "here I can run custom commands, but no preparation needed"
