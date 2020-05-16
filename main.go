@@ -3,14 +3,24 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/rs/zerolog"
 )
 
 func main() {
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+	host := getHostname()
+	log := zerolog.New(os.Stdout).With().
+		Timestamp().
+		Str("role", "go-requestbin-server").
+		Str("host", host).
+		Logger().
+		Output(zerolog.ConsoleWriter{Out: os.Stderr})
+
 	mux := http.NewServeMux()
 	hs := http.HandlerFunc(HelloServer)
 	mux.Handle("/", hs)
@@ -31,17 +41,26 @@ func main() {
 		// We received an interrupt signal, shut down.
 		if err := server.Shutdown(context.Background()); err != nil {
 			// Error from closing listeners, or context timeout:
-			log.Printf("HTTP server Shutdown: %v", err)
+			log.Error().Err(err).Msg("HTTP server Shutdown")
+
 		}
 		close(idleConnsClosed)
 	}()
-
+	log.Info().Msg("Listening...")
 	if err := server.ListenAndServe(); err != http.ErrServerClosed {
 		// Error starting or closing listener:
-		log.Fatalf("HTTP server ListenAndServe: %v", err)
+		log.Fatal().Err(err).Msg("HTTP server ListenAndServe")
 	}
 
 	<-idleConnsClosed
+}
+
+func getHostname() string {
+	host, err := os.Hostname()
+	if err != nil {
+		return ""
+	}
+	return host
 }
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
