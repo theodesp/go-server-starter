@@ -1,4 +1,6 @@
+export GO111MODULE=on
 GO ?= go
+SHELL=/bin/bash -o pipefail
 GOFMT ?= gofmt "-s"
 GOFILES := $(shell find . -name "*.go" -type f -not -path "./vendor/*")
 PACKAGES ?= $(shell $(GO) list ./... | grep -v /vendor/)
@@ -36,7 +38,7 @@ test:
 
 .PHONY: test-lint
 test-lint:
-	golangci-lint run $(GOFILES)
+	golangci-lint run $(GOFILES) --timeout=20s
 
 vet:
 	$(GO) vet $(PACKAGES)

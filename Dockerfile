@@ -15,8 +15,13 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /app/
 COPY --from=builder /build ./
 
+ARG UID="3322"
+ARG GID="3322"
+
 RUN mkdir /app/tmp
-RUN adduser -S -D -H -h ./tmp gorequestbin 
+RUN addgroup --system --gid $GID gorequestbin && \
+    adduser --system --uid $UID --no-create-home --ingroup gorequestbin gorequestbin && \
+    chmod +x ./app
 USER gorequestbin
 
 # Metadata params
@@ -26,6 +31,9 @@ ARG VCS_URL
 ARG VCS_REF
 ARG NAME
 ARG VENDOR
+
+ENV GOREQUESTBIN-ADDRESS="127.0.0.1" \
+    GOREQUESTBIN-PORT="3322"
 
 # Metadata
 LABEL org.label-schema.build-date=$BUILD_DATE \
@@ -40,5 +48,6 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
     org.label-schema.docker.cmd="docker run -d theodesp/go-requestbin"
 
 
-ENTRYPOINT ["./app"] 
+ENTRYPOINT ["./app"]
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD curl --fail http://localhost:3000/ || exit 1
 EXPOSE 3000
