@@ -22,4 +22,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Test
+        uses: actions-contrib/golangci-lint@v1
         run: make all
