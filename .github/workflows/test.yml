@@ -21,5 +21,9 @@ jobs:
             ${{ runner.os }}-go-
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: golangci-lint
+        uses: reviewdog/action-golangci-lint@v1
+        with:
+          golangci_lint_flags: "--enable-all --exclude-use-default=false"
       - name: Test
         run: make test
