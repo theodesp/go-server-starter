@@ -21,7 +21,5 @@ jobs:
             ${{ runner.os }}-go-
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Run golangci-lint
-        uses: actions-contrib/golangci-lint@v1
       - name: Test
         run: make test
