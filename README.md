@@ -1,6 +1,6 @@
 ## go-requestbin
 
-[![Build Status](https://travis-ci.org/theodesp/go-requestbin.svg)](https://travis-ci.org/theodesp/go-requestbin)
+[![Build Status](https://github.com/theodesp/go-requestbin/workflows/.github/workflows/test.yml/badge.svg)
 [![codecov](https://codecov.io/gh/theodesp/go-requestbin/branch/master/graph/badge.svg)](https://codecov.io/gh/theodesp/go-requestbin)
 [![Go Report Card](https://goreportcard.com/badge/github.com/theodesp/go-requestbin?style=flat-square)](https://goreportcard.com/report/github.com/theodesp/go-requestbin)
 [![Go Doc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](http://godoc.org/github.com/theodesp/go-requestbin)

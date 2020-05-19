@@ -25,3 +25,9 @@ jobs:
         uses: reviewdog/action-golangci-lint@v1
       - name: Test
         run: make test
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage.out
+          name: codecov-go-requestbin
+          fail_ci_if_error: true
