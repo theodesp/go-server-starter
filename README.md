@@ -1,4 +1,4 @@
-## go-requestbin
+## go-server-starter
 
 [![Build Status](https://github.com/theodesp/go-requestbin/workflows/.github/workflows/test.yml/badge.svg)
 [![codecov](https://codecov.io/gh/theodesp/go-requestbin/branch/master/graph/badge.svg)](https://codecov.io/gh/theodesp/go-requestbin)
@@ -7,15 +7,7 @@
 [![Release](https://img.shields.io/github/release/theodesp/go-requestbin.svg?style=flat-square)](https://github.com/theodesp/go-requestbin/releases/latest)
 [![GolangCI](https://golangci.com/badges/github.com/golangci/golangci-lint.svg)](https://golangci.com/r/github.com/theodesp/go-requestbin)
 
-A web server that records your requests locally (in-memory) for later retrieval. Available as a binary and Docker image.
-
-## Usage
-
-### CLI
-
-### Docker
-
-### Binary
+A web server starter for go
 
 # Licence
 
